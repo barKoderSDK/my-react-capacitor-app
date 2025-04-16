@@ -102,8 +102,9 @@ const BarcodeScannerApp = () => {
   useEffect(() => {
     if (!isInitialized) {
       initializeBarkoder();
+      alert("barkoder initialized")
     }
-  }, [isInitialized]);
+  }, []);
 
   useEffect(() => {
     setActiveBarcodeTypes();
@@ -233,7 +234,7 @@ const BarcodeScannerApp = () => {
       };
       Barkoder.addListener("barkoderResultEvent", handleBarkoderEvent);
     }
-  }, [isInitialized]);
+  }, [Barkoder]);
 
   const stopScanning = async () => {
     setScannedResult({

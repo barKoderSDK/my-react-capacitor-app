@@ -10,6 +10,19 @@
 
 # production
 /build
+/android
+android
+
+package-lock.json
+
+# iOS files
+Pods
+Podfile.lock
+Build
+xcuserdata
+
+# macOS files
+.DS_Store
 
 # misc
 .DS_Store

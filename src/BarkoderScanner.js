@@ -83,7 +83,7 @@ const BarcodeScannerApp = () => {
     try {
       await Barkoder.registerWithLicenseKey({
         licenseKey:
-          "YOUR_KEY",
+          "YOUR_LICENSE_KEY",
       });
       await Barkoder.initialize({
         width: Math.round(boundingRect.width),
@@ -102,7 +102,6 @@ const BarcodeScannerApp = () => {
   useEffect(() => {
     if (!isInitialized) {
       initializeBarkoder();
-      alert("barkoder initialized")
     }
   }, []);
 
@@ -178,6 +177,12 @@ const BarcodeScannerApp = () => {
   const handleScanResult = (barkoderResult) => {
     const randomId = Math.floor(Math.random() * 1000000);
 
+    const results = barkoderResult?.decoderResults.map((decoderResult, index) => ({
+      id: `${randomId}-${index}`,
+      textualData: decoderResult.textualData || "No data available",
+      type: decoderResult.barcodeTypeName || "Unknown type",
+    }));
+
     setScannedResult({
       id: randomId,
       textualData:
@@ -192,11 +197,6 @@ const BarcodeScannerApp = () => {
       }`,
     });
 
-    const results = barkoderResult?.decoderResults.map((decoderResult) => ({
-      id: randomId,
-      textualData: decoderResult.textualData || "No data available",
-      type: decoderResult.barcodeTypeName || "Unknown type",
-    }));
     setRecentScans((prevScans) => [...prevScans, ...results]);
     Barkoder.stopScanning();
     setIsScanning(false);
@@ -474,7 +474,7 @@ const BarcodeScannerApp = () => {
       );
       return updatedScans;
     });
-
+    setIsDetailsMorePopupVisible(false);
     closeBarcodeDetailsPopup();
   };
 
